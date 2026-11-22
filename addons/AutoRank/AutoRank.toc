@@ -1,0 +1,11 @@
+## Interface: 16001
+## Title: AutoRank
+## Notes: Keeps real spells on your action bars and swaps in the highest rank when you learn one. Full tooltips, icons, cooldowns and range. /autorank
+## Version: 1.0.0
+## Author: MeioNeiz
+## X-Website: https://github.com/MeioNeiz/AutoRank
+## X-License: MIT
+## SavedVariables: AutoRankDB
+## SavedVariablesPerCharacter: AutoRankCharDB
+
+AutoRank.lua

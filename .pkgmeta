@@ -1,0 +1,8 @@
+package-as: AutoRank
+
+move-folders:
+  AutoRank/addons/AutoRank: AutoRank
+
+ignore:
+  - docs
+  - README.md
