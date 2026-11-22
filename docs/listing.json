@@ -3,5 +3,24 @@
   "summary": "Learn a new rank and your action bars move up to it; low ranks you placed on purpose stay.",
   "cfCategory": "Action Bars",
   "cfExtra": [],
-  "wagoCategories": ["Action Bars"]
+  "wagoCategories": [
+    "Action Bars"
+  ],
+  "gallery": [
+    {
+      "file": "before-after.png",
+      "title": "Before and after",
+      "description": "After learning Shadow Bolt rank 4: the bar still on rank 3, then on rank 4"
+    },
+    {
+      "file": "settings.png",
+      "title": "Settings",
+      "description": "Esc > Options > AddOns > AutoRank"
+    },
+    {
+      "file": "chat.png",
+      "title": "What it tells you",
+      "description": "One chat line for each change it makes"
+    }
+  ]
 }
