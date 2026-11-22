@@ -8,6 +8,8 @@
 ## Author: MeioNeiz
 ## X-Website: https://github.com/MeioNeiz/AutoRank
 ## X-License: MIT
+## X-Curse-Project-ID: 1822718
+## X-Wago-ID: Q6aq176W
 ## SavedVariables: AutoRankDB
 ## SavedVariablesPerCharacter: AutoRankCharDB
 
