@@ -22,6 +22,11 @@ Renamed from AutoRank: see [Keeping your settings](#keeping-your-settings).
 
 Settings: Esc > Options > AddOns > MeioAutoRank, or `/autorank`. `/autorank help` lists the commands.
 
+## Coming soon
+
+- Click Casting and controller bars get the new rank too: "Click Casting: Heal rank 1 ->
+  rank 3"
+
 ## Keeping your settings
 
 Renamed from AutoRank. Your settings carry over if you log in once with the old AutoRank
