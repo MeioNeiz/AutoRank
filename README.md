@@ -18,6 +18,9 @@ Demon Armor](docs/before-after.png)
 - Your pet's bar and autocast move up too
 - Drag a low rank onto a button and it stays there (Life Tap rank 1)
 
+![Chat after learning new ranks: Shadow Bolt rank 3 to rank 4, Life Tap rank 1 kept on its
+button, Demon Skin to Demon Armor, Healthstone to the one in your bags](docs/chat.png)
+
 Settings: Esc > Options > AddOns > MeioAutoRank, or `/autorank`. `/autorank help` lists the commands.
 
 ## Coming soon
