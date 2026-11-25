@@ -9,8 +9,6 @@ For WoW Forever.
 Bolt rank 3 and Demon Skin; with Meio Auto Rank, the same buttons are Shadow Bolt rank 4 and
 Demon Armor](docs/before-after.png)
 
-Renamed from AutoRank: see [Keeping your settings](#keeping-your-settings).
-
 ## What it does
 
 - New ranks replace the old ones on your bars (after combat if you're fighting)
@@ -32,15 +30,6 @@ Settings: Esc > Options > AddOns > MeioAutoRank, or `/autorank`. `/autorank help
 
 ![Coming soon: MeioAutoRank list: Corruption, Life Tap and Shadow Bolt on old ranks, each
 with an Upgrade button, kept ones say why](docs/soon.png)
-
-## Keeping your settings
-
-Renamed from AutoRank. Your settings carry over if you log in once with the old AutoRank
-folder still enabled (until you disable it, MeioAutoRank stays idle and says so in chat); if
-your addon manager removed it, copy `WTF\Account\<account>\SavedVariables\AutoRank.lua` (and
-the per-character file,
-`WTF\Account\<account>\<realm>\<character>\SavedVariables\AutoRank.lua`) to
-`MeioAutoRank.lua` before logging in.
 
 ## Install
 
