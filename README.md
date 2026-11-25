@@ -26,6 +26,12 @@ Settings: Esc > Options > AddOns > MeioAutoRank, or `/autorank`. `/autorank help
 
 - Click Casting and controller bars get the new rank too: "Click Casting: Heal rank 1 ->
   rank 3"
+- A list of every button still on an old rank, with Upgrade and Upgrade all (`/autorank
+  list`)
+- Ask first: list new ranks for you to pick instead of swapping them
+
+![Coming soon: MeioAutoRank list: Corruption, Life Tap and Shadow Bolt on old ranks, each
+with an Upgrade button, kept ones say why](docs/soon.png)
 
 ## Keeping your settings
 
