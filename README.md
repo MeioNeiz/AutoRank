@@ -22,6 +22,7 @@ Settings: Esc > Options > AddOns > MeioAutoRank, or `/autorank`. `/autorank help
 
 ## Coming soon
 
+- A list of every button still on a lower rank, each with an Upgrade button (`/autorank list`)
 - Spells you bind to mouse clicks on party and raid frames (Click Casting) get the new
   rank too
 
