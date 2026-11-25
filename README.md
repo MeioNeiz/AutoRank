@@ -5,8 +5,9 @@ move up by themselves; low ranks you put there on purpose stay.
 
 For WoW Forever.
 
-![Before: a warlock learns Shadow Bolt rank 4 but the bar's Shadow Bolt is still rank 3; with
-Meio Auto Rank, the same button is rank 4](docs/before-after.png)
+![Before: a warlock learns Shadow Bolt rank 4 and Demon Armor but the bar still holds Shadow
+Bolt rank 3 and Demon Skin; with Meio Auto Rank, the same buttons are Shadow Bolt rank 4 and
+Demon Armor](docs/before-after.png)
 
 Renamed from AutoRank: see [Keeping your settings](#keeping-your-settings).
 
