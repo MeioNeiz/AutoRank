@@ -2,12 +2,6 @@
 
 ## 1.1.1
 
-- Renamed from AutoRank. Your settings carry over if you log in once with the old AutoRank
-  folder still enabled (until you disable it, MeioAutoRank stays idle and says so in
-  chat); if your addon manager removed it, copy
-  `WTF\Account\<account>\SavedVariables\AutoRank.lua` (and the per-character file,
-  `WTF\Account\<account>\<realm>\<character>\SavedVariables\AutoRank.lua`) to
-  `MeioAutoRank.lua` before logging in.
 - Fixed: Felsteed to Dreadsteed, Warhorse to Charger and Bear Form to Dire Bear Form never
   moved up on their own
 - Fixed: `/autorank unpin` with something other than a slot number unpinned every button
