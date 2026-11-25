@@ -1,5 +1,6 @@
 {
   "title": "Meio AutoRank",
+  "wagoSlug": "autorank",
   "summary": "Learn a new rank and your action bars move up to it; low ranks you placed on purpose stay.",
   "cfCategory": "Action Bars",
   "cfExtra": [],
@@ -15,7 +16,7 @@
     {
       "file": "settings.png",
       "title": "Settings",
-      "description": "Esc > Options > AddOns > AutoRank"
+      "description": "Esc > Options > AddOns > MeioAutoRank"
     },
     {
       "file": "chat.png",

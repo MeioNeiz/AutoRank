@@ -2,6 +2,13 @@
 
 Learn a new rank and your action bars move up to it. Low ranks you put there on purpose stay.
 
+Renamed from AutoRank. Your settings carry over if you log in once with the old AutoRank
+folder still enabled (until you disable it, MeioAutoRank stays idle and says so in chat); if
+your addon manager removed it, copy `WTF\Account\<account>\SavedVariables\AutoRank.lua` (and
+the per-character file,
+`WTF\Account\<account>\<realm>\<character>\SavedVariables\AutoRank.lua`) to
+`MeioAutoRank.lua` before logging in.
+
 ![Before: a warlock learns Shadow Bolt rank 4 but the bar's Shadow Bolt is still rank 3; with
 AutoRank, the same button is rank 4](docs/before-after.png)
 
@@ -11,9 +18,9 @@ AutoRank, the same button is rank 4](docs/before-after.png)
 - Replacement spells count too: Demon Skin to Demon Armor, Lesser Heal to Heal
 - Drag a low rank onto a button and it stays there (Life Tap rank 1)
 - Your pet's bar and autocast move up too
-- Healthstones, Soulstones, mana gems, conjured food and water: the best one in your bags
+- Healthstones, Soulstones, Spellstones, Firestones, mana gems, conjured food and water: the best one in your bags
 
-Settings: Esc > Options > AddOns > AutoRank, or `/autorank`. `/autorank help` lists the commands.
+Settings: Esc > Options > AddOns > MeioAutoRank, or `/autorank`. `/autorank help` lists the commands.
 
 ## Install
 
@@ -22,7 +29,7 @@ Use your addon manager (CurseForge, Wago), or unzip a GitHub release into
 
 ## Feedback
 
-Bugs and ideas: [GitHub issues](https://github.com/MeioNeiz/AutoRank/issues)
+Bugs and ideas: [GitHub issues](https://github.com/MeioNeiz/MeioAutoRank/issues)
 
 ## More Meio addons
 

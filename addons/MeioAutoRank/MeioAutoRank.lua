@@ -1,4 +1,4 @@
--- AutoRank: real spells stay on your bars; when you learn a new rank, buttons that held your
+-- MeioAutoRank: real spells stay on your bars; when you learn a new rank, buttons that held your
 -- previous top rank are swapped to it. A spell that replaces another (Demon Skin -> Demon
 -- Armor, Lesser Heal -> Heal) counts as its next rank. Lower ranks you put on a button stay.
 -- A button holding a conjured item (Healthstone, Soulstone, mana gem, conjured water...)
@@ -6,12 +6,12 @@
 --
 -- Keeping a low rank: drag that rank from the spellbook onto the button. A rank you place
 -- yourself is pinned to that button and never upgraded (until something else goes there).
--- /autorank help lists the commands; Esc > Options > AddOns > AutoRank has the settings.
+-- /autorank help lists the commands; Esc > Options > AddOns > MeioAutoRank has the settings.
 local _, ns = ...
 
-AutoRankDB = AutoRankDB or {}
-local db = AutoRankDB
-local pins = {}   -- slot -> spellID kept on purpose (AutoRankCharDB.pins once loaded)
+MeioAutoRankDB = MeioAutoRankDB or {}
+local db = MeioAutoRankDB
+local pins = {}   -- slot -> spellID kept on purpose (MeioAutoRankCharDB.pins once loaded)
 
 local BANKS = Enum and Enum.SpellBookSpellBank
 local BANK = (BANKS and BANKS.Player) or 0
@@ -31,7 +31,7 @@ if type(RANK) == "string" and RANK ~= "Rank" then
     RANK_PATTERNS[2] = RANK:gsub("%p", "%%%0") .. " (%d+)"
 end
 
-local function Print(msg) DEFAULT_CHAT_FRAME:AddMessage("|cffb090ffAutoRank:|r " .. msg) end
+local function Print(msg) DEFAULT_CHAT_FRAME:AddMessage("|cffb090ffMeioAutoRank:|r " .. msg) end
 local function OnOff(v) return v and "|cff80ff80on|r" or "|cffff8080off|r" end
 local function Cmd(s) return "|cffffd100" .. s .. "|r" end
 local function Muted(s) return "|cff999999" .. s .. "|r" end
@@ -331,12 +331,12 @@ local function Upgrade(full)
     local known, lines = KnownSpells()
     -- Chains are new in 1.1.0: a replacement learned before then isn't new, so an older
     -- spell already on a bar stays (/autorank all moves it)
-    if not AutoRankCharDB.chainsSeeded and knownCache then
+    if not MeioAutoRankCharDB.chainsSeeded and knownCache then
         for _, ids in ipairs(CHAIN_IDS) do
             local top = lines[ids[1]]
-            if top and top.eff > (tops[ids[1]] or 0) then tops[ids[1]] = top.eff end
+            if top and top.eff > (tops[ids[1]] or -1) then tops[ids[1]] = top.eff end
         end
-        AutoRankCharDB.chainsSeeded = true
+        MeioAutoRankCharDB.chainsSeeded = true
     end
     local n = 0
     for slot = 1, 180 do
@@ -361,8 +361,13 @@ local function Upgrade(full)
         end
     end
     n = n + UpgradePetBar(known)
+    -- a chain's first spell can be unranked (Felsteed, Bear Form): its 0 is still a top, or
+    -- learning the next spell in the chain wouldn't count as new
+    local chains = Chains()
     for key, v in pairs(lines) do
-        if v.eff > 0 and v.eff > (tops[key] or 0) then tops[key] = v.eff end
+        if (v.eff > 0 or chains[v.name]) and v.eff > (tops[key] or -1) then
+            tops[key] = v.eff
+        end
     end
     if full and n == 0 then
         Print("every ranked spell on your bars is already the highest rank you know"
@@ -483,10 +488,31 @@ local SPELLBOOK_EVENTS = { SPELLS_CHANGED = true, LEARNED_SPELL_IN_SKILL_LINE = 
     LEARNED_SPELL_IN_TAB = true, PLAYER_ENTERING_WORLD = true, PET_BAR_UPDATE = true,
     UNIT_PET = true, PLAYER_LEVEL_UP = true }
 
+-- AutoRank is this addon before the Meio rename. With its folder still loaded both would
+-- act and fight over pins, so this one stays idle and leaves the old tables to it
+local OLD = "AutoRank"
+local function OldLoaded() return C_AddOns.IsAddOnLoaded(OLD) end
+
+-- at logout while idle: next time, without the old folder, we start from its settings
+local function CopyOld()
+    if type(AutoRankDB) == "table" then MeioAutoRankDB = AutoRankDB end
+    if type(AutoRankCharDB) == "table" then MeioAutoRankCharDB = AutoRankCharDB end
+end
+
 local function LoadDB()
-    -- AutoRankDB = AutoRankDB above ran before the saved copy loaded
-    AutoRankDB = AutoRankDB or {}
-    db = AutoRankDB
+    -- saved under the old name (AutoRank): a renamed file, or copied by CopyOld
+    if not OldLoaded() then
+        if type(AutoRankDB) == "table" and not next(MeioAutoRankDB or {}) then
+            MeioAutoRankDB = AutoRankDB
+        end
+        if type(AutoRankCharDB) == "table" and not MeioAutoRankCharDB then
+            MeioAutoRankCharDB = AutoRankCharDB
+        end
+        AutoRankDB, AutoRankCharDB = nil, nil
+    end
+    -- MeioAutoRankDB = MeioAutoRankDB above ran before the saved copy loaded
+    MeioAutoRankDB = MeioAutoRankDB or {}
+    db = MeioAutoRankDB
     if db.on == nil then db.on = not db.off end
     db.conjured = db.conjured or {}
     if db.stonesOff then db.conjured.healthstone = false end
@@ -495,15 +521,16 @@ local function LoadDB()
         if db.conjured[fam.key] == nil then db.conjured[fam.key] = true end
     end
     db.off = nil
-    AutoRankCharDB = AutoRankCharDB or {}
-    AutoRankCharDB.pins = AutoRankCharDB.pins or {}
-    pins = AutoRankCharDB.pins
-    AutoRankCharDB.tops = AutoRankCharDB.tops or {}
-    tops = AutoRankCharDB.tops
+    MeioAutoRankCharDB = MeioAutoRankCharDB or {}
+    MeioAutoRankCharDB.pins = MeioAutoRankCharDB.pins or {}
+    pins = MeioAutoRankCharDB.pins
+    MeioAutoRankCharDB.tops = MeioAutoRankCharDB.tops or {}
+    tops = MeioAutoRankCharDB.tops
 end
 
 f:RegisterEvent("ADDON_LOADED")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
+f:RegisterEvent("PLAYER_LOGOUT")
 f:RegisterEvent("SPELLS_CHANGED")
 f:RegisterEvent("PLAYER_REGEN_ENABLED")
 f:RegisterEvent("ACTIONBAR_SLOT_CHANGED")
@@ -516,12 +543,17 @@ f:RegisterEvent("PET_BAR_UPDATE")
 f:RegisterUnitEvent("UNIT_PET", "player")
 f:SetScript("OnEvent", function(_, event, arg)
     if event == "ADDON_LOADED" then
-        if arg == "AutoRank" then
+        if arg == "MeioAutoRank" then
             LoadDB()
             f:UnregisterEvent("ADDON_LOADED")
         end
         return
     end
+    if event == "PLAYER_LOGOUT" then
+        if OldLoaded() then CopyOld() end
+        return
+    end
+    if OldLoaded() then return end
     if SPELLBOOK_EVENTS[event] then knownCache = nil end
     if event == "ACTIONBAR_SLOT_CHANGED" then SlotChanged(arg); return end
     -- A loading screen fires a burst of spell, bar and bag events: one pass once it settles
@@ -606,7 +638,7 @@ local function Help()
     Line("/autorank unmacro [apply]", "list, then swap, bar macros that are just"
         .. " \"/cast Spell\" for the spell (the macros are kept)")
     Line("/autorank debug", "print the spellbook size and every bar macro")
-    DEFAULT_CHAT_FRAME:AddMessage("  Settings: Esc > Options > AddOns > AutoRank ("
+    DEFAULT_CHAT_FRAME:AddMessage("  Settings: Esc > Options > AddOns > MeioAutoRank ("
         .. Cmd("/autorank settings") .. ")")
 end
 
@@ -629,6 +661,7 @@ ns.FAMILIES = FAMILIES
 ns.Print, ns.OnOff = Print, OnOff
 ns.SetOn, ns.SetConjured, ns.UnpinAll, ns.PinCount = SetOn, SetConjured, UnpinAll, PinCount
 ns.Help = Help
+ns.OldLoaded = OldLoaded
 
 local function PrintPins()
     local any = false
@@ -643,8 +676,8 @@ local function PrintPins()
     end
 end
 
-SLASH_AUTORANK1 = "/autorank"
-SlashCmdList.AUTORANK = function(msg)
+SLASH_MEIOAUTORANK1 = "/autorank"
+SlashCmdList.MEIOAUTORANK = function(msg)
     msg = strtrim((msg or ""):lower())
     local word, rest = msg:match("^(%S*)%s*(.-)$")
     local fam = FAMILY_BY_KEY[word]
@@ -669,8 +702,17 @@ SlashCmdList.AUTORANK = function(msg)
         PrintPins()
     elseif word == "unpin" then
         local slot = tonumber(rest)
-        Print(slot and ("slot %d will upgrade again."):format(slot) or "all pins removed.")
-        if slot then pins[slot] = nil; Upgrade(false) else UnpinAll() end
+        if rest == "" then
+            Print("all pins removed.")
+            UnpinAll()
+        elseif slot then
+            Print(("slot %d will upgrade again."):format(slot))
+            pins[slot] = nil
+            Upgrade(false)
+        else
+            Print("usage: " .. Cmd("/autorank unpin") .. " (all) or "
+                .. Cmd("/autorank unpin <slot>"))
+        end
     elseif msg == "debug" then
         Debug()
     elseif word == "unmacro" then
@@ -680,3 +722,18 @@ SlashCmdList.AUTORANK = function(msg)
         Help()
     end
 end
+
+-- While idle /autorank is the old folder's: both claim the word
+local oldFolder = CreateFrame("Frame")
+oldFolder:RegisterEvent("PLAYER_LOGIN")
+oldFolder:SetScript("OnEvent", function()
+    if not OldLoaded() then return end
+    if SlashCmdList.AUTORANK then
+        SlashCmdList.MEIOAUTORANK = SlashCmdList.AUTORANK
+        if hash_SlashCmdList then
+            hash_SlashCmdList["/AUTORANK"] = nil
+        end
+    end
+    Print("the old AutoRank addon is still enabled, so MeioAutoRank is idle: disable"
+        .. " AutoRank in the AddOns list and /reload (MeioAutoRank replaces it)")
+end)

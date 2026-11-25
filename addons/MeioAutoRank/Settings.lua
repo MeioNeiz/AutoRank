@@ -1,5 +1,5 @@
--- Options panel (Esc > Options > AddOns > AutoRank, or /autorank). Settings write
--- straight into AutoRankDB.
+-- Options panel (Esc > Options > AddOns > MeioAutoRank, or /autorank). Settings write
+-- straight into MeioAutoRankDB.
 local _, ns = ...
 
 local category
@@ -19,25 +19,26 @@ local function OnChange(variable, tbl, key, fn)
 end
 
 local function Register()
-    if category or not (Settings and Settings.RegisterVerticalLayoutCategory) then
+    if category or not (Settings and Settings.RegisterVerticalLayoutCategory)
+        or ns.OldLoaded() then
         return
     end
     local db = ns.db()
     db.conjured = db.conjured or {}
     local layout
-    category, layout = Settings.RegisterVerticalLayoutCategory("AutoRank")
+    category, layout = Settings.RegisterVerticalLayoutCategory("MeioAutoRank")
 
-    local on = Settings.RegisterAddOnSetting(category, "AUTORANK_ON", "on", db,
-        Settings.VarType.Boolean, "AutoRank on", true)
+    local on = Settings.RegisterAddOnSetting(category, "MEIOAUTORANK_ON", "on", db,
+        Settings.VarType.Boolean, "MeioAutoRank on", true)
     Settings.CreateCheckbox(category, on, "When you learn a new rank, buttons holding "
         .. "your previous top rank move up to it, and conjured item buttons get your best "
         .. "one. Off: your bars are left alone. /autorank on||off does the same.")
-    OnChange("AUTORANK_ON", db, "on", ns.SetOn)
+    OnChange("MEIOAUTORANK_ON", db, "on", ns.SetOn)
 
     Header(layout, "Conjured items", "A button holding any one of these gets the best "
         .. "you have in your bags, out of combat. /autorank <item> on||off does the same.")
     for _, fam in ipairs(ns.FAMILIES) do
-        local variable = "AUTORANK_CONJURED_" .. fam.key:upper()
+        local variable = "MEIOAUTORANK_CONJURED_" .. fam.key:upper()
         local setting = Settings.RegisterAddOnSetting(category, variable, fam.key,
             db.conjured, Settings.VarType.Boolean, fam.name, true)
         Settings.CreateCheckbox(category, setting, ("A button holding any %s is switched "
@@ -76,6 +77,6 @@ function ns.OpenSettings()
     return true
 end
 
-function AutoRank_OnAddonCompartmentClick()
+function MeioAutoRank_OnAddonCompartmentClick()
     if not ns.OpenSettings() then ns.Help() end
 end
