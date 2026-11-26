@@ -1,7 +1,7 @@
 {
   "title": "Meio Auto Rank",
   "wagoSlug": "autorank",
-  "summary": "New spell ranks go on your bars by themselves; low ranks you chose stay.",
+  "summary": "Puts new spell ranks on your bars by themselves; low ranks you chose stay.",
   "cfCategory": "Action Bars",
   "cfExtra": [],
   "wagoCategories": [

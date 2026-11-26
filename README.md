@@ -1,7 +1,7 @@
 # Meio Auto Rank
 
-The game leaves old ranks on your bars when you learn new ones. With Meio Auto Rank your bars
-move up by themselves; low ranks you put there on purpose stay.
+Forever leaves rank 1 on your bars when you learn rank 2. Meio Auto Rank swaps the new
+rank in for you, and keeps the low ranks you put there on purpose.
 
 For WoW Forever.
 
